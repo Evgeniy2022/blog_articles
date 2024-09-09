@@ -30,7 +30,6 @@ export const EditArticle: FC = () => {
     body: "",
   });
   const [tags, setTags] = useState<string[]>([]);
-  //   console.log(tags);
   useEffect(() => {
     if (editArticle) {
       setEditInputData({
@@ -54,8 +53,6 @@ export const EditArticle: FC = () => {
 
   async function hanleSubmitEditForm(data: IEditArticle) {
     try {
-      console.log(data);
-
       const res = await editMyArticle(
         slug,
         data.title,
@@ -63,12 +60,12 @@ export const EditArticle: FC = () => {
         data.body
       );
       dispatch(editingArticle(res.article));
-      navigate("/articles");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
   }
-  // console.log(editInputData);
+
   function addTagByEditing() {
     if (inputRef.current) {
       const input = inputRef.current;

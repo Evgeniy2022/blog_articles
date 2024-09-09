@@ -20,7 +20,7 @@ export const Header: FC = () => {
 
   return (
     <header className={styles.header}>
-      <Link to="/articles" className={styles.logo}>
+      <Link to="/" className={styles.logo}>
         Realworld Blog
       </Link>
 

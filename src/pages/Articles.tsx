@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-// import { Link } from "react-router-dom";
 import { ArticlePsot } from "../components/ArticlePsot/ArticlePsot";
 import { Pagination } from '../components/Pagination/Pagination';
 import { AticleType } from '../articleType';
@@ -10,7 +9,7 @@ interface ArticlesProps {
   setPage: (arg: number) => void;
   pagesAll: number;
 }
-const storageItem = JSON.parse(localStorage.getItem("fovoriteSlugs") || "");
+const storageItem = JSON.parse(localStorage.getItem("fovoriteSlugs") || "") || [];
 
 export const Articles: FC<ArticlesProps> = ({ articles, page, setPage, pagesAll }) => {
   const [saveSlugs, setSaveSlugs] = useState(storageItem);

@@ -38,4 +38,5 @@ body {
 
 .main {
   padding: 26px 0 0 0;
+  position: relative;
 }

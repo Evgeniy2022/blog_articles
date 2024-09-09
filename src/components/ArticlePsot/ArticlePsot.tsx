@@ -1,21 +1,20 @@
-import { FC } from "react";
-
+import { FC, useEffect, useState } from "react";
 import styles from "./ArticlePsot.module.css";
 import { useNavigate } from "react-router-dom";
 import { AticleType } from "../../articleType";
 import Like from "../../../public/Vector.png";
 import RedLike from "../../../public/redLike.svg";
 import { deleteSlugArticle, favoriteSlugArticle } from "../../api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { editingArticle } from "../../redux/slices/articlesSlice";
+import { monthOfYear } from "../../assets";
 
 interface ArticlePsotsProps {
   article: AticleType;
   saveSlugs: string[];
   setSaveSlugs: (arg: string[])=> void;
 }
-
-
 
 export const ArticlePsot: FC<ArticlePsotsProps> = ({
   article,
@@ -27,58 +26,49 @@ export const ArticlePsot: FC<ArticlePsotsProps> = ({
   ).find((item) => item.slug === article.slug);
 
   const slug: string = articleSlug?.slug ? articleSlug.slug : "";
-
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-  //   const auth = UseAuth();
-
-  const monthOfYear = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const str = new Date(article.createdAt);
-  const dayOfMonth = str.getDate();
-  const monthDate = str.getMonth() + 1;
-  const year = str.getFullYear();
-  let month;
-
-  for (let i = 0; i < monthOfYear.length; i++) {
-    if (i === monthDate) {
-      month = monthOfYear[i - 1];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [time, setTime] = useState<any>({
+    dayOfMonth : null,
+    monthDate : null,
+    year : null,
+    month : null,
+  })
+  
+  useEffect(() => {
+    const str = new Date(article.createdAt);
+    const dayOfMonth = str.getDate();
+    const monthDate = str.getMonth() + 1;
+    const year = str.getFullYear();
+    let month;
+    for (let i = 0; i < monthOfYear.length; i++) {
+      if (i === monthDate) {
+        month = monthOfYear[i - 1];
+      }
     }
-  }
+    setTime({dayOfMonth, monthDate, year, month})
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("fovoriteSlugs", JSON.stringify(saveSlugs));
+  }, [saveSlugs])
 
   async function favoriteWithSlug() {
     if (slug && !saveSlugs.includes(slug)) {
       const res = await favoriteSlugArticle(slug);
-
       if (res.ok) {
         setSaveSlugs([...saveSlugs, slug]);
-        localStorage.setItem("fovoriteSlugs", JSON.stringify(saveSlugs));
+        dispatch(editingArticle({...article, favoritesCount: article.favoritesCount + 1}))
       }
     } else {
       const res = await deleteSlugArticle(slug);
       if (res.ok) {
-        saveSlugs.splice(
-          saveSlugs.findIndex((item) => item === slug),
-          1
-        );
-
-        setSaveSlugs(saveSlugs);
-        localStorage.setItem("fovoriteSlugs", JSON.stringify(saveSlugs));
+        setSaveSlugs(saveSlugs.filter((item) => item != slug));
+        dispatch(editingArticle({...article, favoritesCount: article.favoritesCount - 1}))
       }
     }
   }
-  console.log(saveSlugs);
 
   return (
     <div className={styles.article}>
@@ -98,9 +88,7 @@ export const ArticlePsot: FC<ArticlePsotsProps> = ({
             )}
           </button>
           <div className={styles.likes}>
-            {saveSlugs.includes(article.slug)
-              ? article.favoritesCount + 1
-              : article.favoritesCount}
+            {article.favoritesCount}
           </div>
         </div>
 
@@ -118,7 +106,7 @@ export const ArticlePsot: FC<ArticlePsotsProps> = ({
       <div className={styles.card}>
         <div className={styles.user}>
           <p className={styles.name}>{article.author.username}</p>
-          <p className={styles.born}>{`${month} ${dayOfMonth}, ${year}`} </p>
+          <p className={styles.born}>{`${time.month} ${time.dayOfMonth}, ${time.year}`} </p>
         </div>
         <img className={styles.avatar} src={article.author.image} alt="" />
       </div>

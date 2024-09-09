@@ -13,9 +13,6 @@ export const PaginationPage: FC<PaginationPageProps> = ({
   setPage,
   arrayPagination,
 }) => {
-
-  
-  // изменение номера page
   function handleClick(i: number) {
     setPage(i - 1);
   }

@@ -33,7 +33,7 @@ export const SignInForm: FC = () => {
       const res: ResponseLogIn = await loginUser(data.email, data.password);
       localStorage.setItem("token", JSON.stringify(res.user.token));
 		dispath(logIn())
-      navigate("/articles");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }

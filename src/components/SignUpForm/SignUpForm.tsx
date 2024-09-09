@@ -23,14 +23,11 @@ export const SignUpForm: FC = () => {
   } = useForm<IFormSignUpInput>();
 
   function handleChange(data: IFormSignUpInput) {
-	console.log(inputData === data.password)
     if (inputData === data.password) {
       registratiomNewUser(data.username, data.email, data.password);
 		navigate("/sign-in");
     }
   }
-
-  //   function
 
   return (
     <div className={styles.body}>

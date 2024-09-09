@@ -34,15 +34,15 @@ export const EditingProfile: FC = () => {
 
   async function editingUserDataForm(data: IFormEditingInput) {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       if (data.password.trim()) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const editData = await editingUserData(
           data.username,
           data.email,
           data.password,
           data.avatar
         );
-        navigate("/articles");
+        navigate("/");
       }
     } catch (err) {
       console.error(err);

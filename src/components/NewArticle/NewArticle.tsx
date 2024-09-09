@@ -38,7 +38,7 @@ export const NewArticle: FC = () => {
         tags
       );
 		dispatch(createNewArticle(res.article))
-		navigate("/articles");
+		navigate("/");
     } catch (err) {
       console.error(err);
     }

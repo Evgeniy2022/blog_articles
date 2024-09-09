@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { AticleType } from "../../articleType";
 
-localStorage.setItem('fovoriteSlugs', JSON.stringify([]))
 
 interface Articles {
   articles: AticleType[];
@@ -37,6 +36,5 @@ export const articleSlice = createSlice({
 export const { setArticles, deleteArticleBySlag, createNewArticle, editingArticle } =
   articleSlice.actions;
 
-// export const selectCount = (state: RootState) => state.counter.value;
 
 export default articleSlice.reducer;

@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-
 import styles from "./Pagination.module.css";
 import { PaginationPage } from "../PaginationPage/PaginationPage";
 import { IArrayPagination } from "../../types";
@@ -24,7 +23,6 @@ export const Pagination: FC<PaginationProps> = ({
     setPages(Math.floor(pagesAll / 20));
   }, [pagesAll]);
 
-  // инициализация пагинации
   useEffect(() => {
     if (pages !== null) {
         setArrayPagination(
@@ -36,14 +34,12 @@ export const Pagination: FC<PaginationProps> = ({
     }
   }, [pages]);
 
-  // изменение состояния активной кнопки пагинации при смене page
   useEffect(() => {
     setArrayPagination(arrayPagination.map((item, index) => {
       return ({ ...item, active: index === page + 1, })
     }))
   }, [page])
 
-  // изменение прокрутки пагинации в соостветствии с условиями
   const arrPag =  page > 2 ? arrayPagination.slice(page -2 , page + 3) : arrayPagination.slice(0, 5)
 
   return (

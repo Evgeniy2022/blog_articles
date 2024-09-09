@@ -9,7 +9,6 @@ import { Articles } from "./pages/Articles";
 import { NotFound } from "./pages/NotFound";
 import { Article } from "./pages/Article";
 import { UseAuth } from "./hooks/UseAuth";
-// import { IArticle } from "./types";
 
 import "./App.css";
 import { getPost } from "./api";
@@ -54,26 +53,24 @@ function App() {
       <Header />
       <main className="main">
         <Routes>
-          <Route path="/">
-            <Route
-              path="articles"
-              element={
-                <Articles
-                  articles={articles}
-                  page={page}
-                  setPage={setPage}
-                  pagesAll={pagesAll}
-                />
-              }
-            />
-            <Route path="articles/:slug" element={<Article />} />
-            <Route path="sign-in" element={<SignIn />} />
-            <Route path="sign-up" element={<SignUp />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="edit/:slug" element={<EditArticle />} />
-            <Route path="new-article" element={<PageNewArticle />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
+          <Route
+            path="/"
+            element={
+              <Articles
+                articles={articles}
+                page={page}
+                setPage={setPage}
+                pagesAll={pagesAll}
+              />
+            }
+          />
+          <Route path="/articles/:slug" element={<Article />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/edit/:slug" element={<EditArticle />} />
+          <Route path="/new-article" element={<PageNewArticle />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </>
