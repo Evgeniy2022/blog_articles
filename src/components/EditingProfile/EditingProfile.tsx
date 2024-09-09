@@ -35,8 +35,7 @@ export const EditingProfile: FC = () => {
   async function editingUserDataForm(data: IFormEditingInput) {
     try {
       if (data.password.trim()) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const editData = await editingUserData(
+         await editingUserData(
           data.username,
           data.email,
           data.password,
