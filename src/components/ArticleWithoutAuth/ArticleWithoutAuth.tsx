@@ -35,7 +35,7 @@ export const ArticleWithoutAuth: FC<ArticleWithoutAuthProps> = ({ slug }) => {
   })
   
   useEffect(() => {
-    const slugs = JSON.parse(localStorage.getItem("fovoriteSlugs") || '') || [];    
+    const slugs = JSON.parse(localStorage.getItem("fovoriteSlugs") || '');    
     setIsLike(slugs.includes(slug.slug))
   }, [slug])
   
