@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { loginUser } from "../../api";
@@ -12,6 +12,9 @@ interface ResponseLogIn {
   user: {
     token: string;
   };
+  errors: {
+    "email or password": string;
+  };
 }
 
 interface IFormLogInInput {
@@ -20,21 +23,27 @@ interface IFormLogInInput {
 }
 
 export const SignInForm: FC = () => {
+  const [errorLogIn, setErrorLogIn] = useState("");
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormLogInInput>();
   const navigate = useNavigate();
-  const dispath = useDispatch()
+  const dispath = useDispatch();
 
   async function hanleSubmitForm(data: IFormLogInInput) {
     try {
       const res: ResponseLogIn = await loginUser(data.email, data.password);
-      localStorage.setItem("token", JSON.stringify(res.user.token));
-		dispath(logIn())
-      navigate("/");
-    } catch (err) {
+      // if (res.errors) {
+      //   setErrorLogIn(res.errors);
+      // } else {
+		// }
+		localStorage.setItem("token", JSON.stringify(res.user.token));
+		dispath(logIn());
+		navigate("/");
+	} catch (err) {
       console.error(err);
     }
   }
@@ -111,6 +120,9 @@ export const SignInForm: FC = () => {
                 </p>
               )}
             </>
+          ) : null}
+          {errorLogIn ? (
+            <p>{`email or password ${errorLogIn["email or password"]}`}</p>
           ) : null}
 
           <button className={styles.btn} type="submit">
