@@ -12,6 +12,9 @@ interface ErrorSignIn {
   errors: {
     "email or password": string;
   };
+  errors: {
+    "email or password": string;
+  };
 }
 
 interface IFormLogInInput {
@@ -20,6 +23,8 @@ interface IFormLogInInput {
 }
 
 export const SignInForm: FC = () => {
+  const [errorLogIn, setErrorLogIn] = useState("");
+
   const {
     register,
     formState: { errors },
@@ -27,14 +32,18 @@ export const SignInForm: FC = () => {
   } = useForm<IFormLogInInput>();
   const navigate = useNavigate();
   const dispath = useDispatch();
+<<<<<<< HEAD
   const [err, setErr] = useState<ErrorSignIn>({
     errors: {
       "email or password": "",
     },
   });
+=======
+>>>>>>> a69f4ffaa4c2109639a348844f57f25ea688c964
 
   async function hanleSubmitForm(values: IFormLogInInput) {
     try {
+<<<<<<< HEAD
       const res = await loginUser(values.email, values.password);
       if (res.ok) {
         const data = await res.json();
@@ -56,6 +65,17 @@ export const SignInForm: FC = () => {
         });
       }
     } catch (err) {
+=======
+      const res: ResponseLogIn = await loginUser(data.email, data.password);
+      // if (res.errors) {
+      //   setErrorLogIn(res.errors);
+      // } else {
+		// }
+		localStorage.setItem("token", JSON.stringify(res.user.token));
+		dispath(logIn());
+		navigate("/");
+	} catch (err) {
+>>>>>>> a69f4ffaa4c2109639a348844f57f25ea688c964
       console.error(err);
     }
   }
@@ -132,6 +152,9 @@ export const SignInForm: FC = () => {
                 </p>
               )}
             </>
+          ) : null}
+          {errorLogIn ? (
+            <p>{`email or password ${errorLogIn["email or password"]}`}</p>
           ) : null}
 
           {err.errors["email or password"] ? (

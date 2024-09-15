@@ -23,6 +23,11 @@ export function loginUser(email: string, password: string) {
     headers: {
       "Content-Type": "application/json",
     },
+<<<<<<< HEAD
+=======
+  }).then((res) => {
+    return res.json();
+>>>>>>> a69f4ffaa4c2109639a348844f57f25ea688c964
   })
 }
 
@@ -38,6 +43,11 @@ export function registratiomNewUser(
       "Content-Type": "application/json",
     },
   })
+<<<<<<< HEAD
+=======
+    .then((res) => res.json())
+    
+>>>>>>> a69f4ffaa4c2109639a348844f57f25ea688c964
 }
 
 export function getUser(token: string) {
@@ -113,18 +123,16 @@ export function editMyArticle(
       "Content-Type": "application/json",
       Authorization: `Token ${JSON.parse(localStorage.getItem("token") || "")}`,
     },
-  }).then((res)=>res.json())
+  }).then((res) => res.json());
 }
 
-export function favoriteSlugArticle(
-  slug: string,
-) {
+export function favoriteSlugArticle(slug: string) {
   return fetch(`https://blog.kata.academy/api/articles/${slug}/favorite `, {
     method: "POST",
     headers: {
       Authorization: `Token ${JSON.parse(localStorage.getItem("token") || "")}`,
     },
-  })
+  });
 }
 
 export function deleteSlugArticle(slug: string) {
