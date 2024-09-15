@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { loginUser } from "../../api";
@@ -8,9 +8,9 @@ import styles from "./SignInForm.module.css";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/slices/userSlice";
 
-interface ResponseLogIn {
-  user: {
-    token: string;
+interface ErrorSignIn {
+  errors: {
+    "email or password": string;
   };
 }
 
@@ -26,14 +26,35 @@ export const SignInForm: FC = () => {
     handleSubmit,
   } = useForm<IFormLogInInput>();
   const navigate = useNavigate();
-  const dispath = useDispatch()
+  const dispath = useDispatch();
+  const [err, setErr] = useState<ErrorSignIn>({
+    errors: {
+      "email or password": "",
+    },
+  });
 
-  async function hanleSubmitForm(data: IFormLogInInput) {
+  async function hanleSubmitForm(values: IFormLogInInput) {
     try {
-      const res: ResponseLogIn = await loginUser(data.email, data.password);
-      localStorage.setItem("token", JSON.stringify(res.user.token));
-		dispath(logIn())
-      navigate("/");
+      const res = await loginUser(values.email, values.password);
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem("token", JSON.stringify(data.user.token));
+        dispath(logIn());
+        navigate("/");
+        setErr({
+          errors: {
+            "email or password": "",
+          },
+        });
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { errors } = await res.json();
+        setErr({
+          errors: {
+            "email or password": errors["email or password"],
+          },
+        });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -111,6 +132,12 @@ export const SignInForm: FC = () => {
                 </p>
               )}
             </>
+          ) : null}
+
+          {err.errors["email or password"] ? (
+            <div
+              className={styles.error}
+            >{`email or password ${err.errors["email or password"]}`}</div>
           ) : null}
 
           <button className={styles.btn} type="submit">

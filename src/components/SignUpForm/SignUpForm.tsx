@@ -11,10 +11,15 @@ interface IFormSignUpInput {
   username: string;
   checkbox: boolean;
 }
+interface IErrorSignUp {
+  email: string;
+  username: string;
+}
 
 export const SignUpForm: FC = () => {
-  const [inputData, setInputData] = useState<string>('');
-  const navigate = useNavigate()
+  const [inputData, setInputData] = useState<string>("");
+  const navigate = useNavigate();
+  const [err, setErr] = useState<IErrorSignUp | string>("");
 
   const {
     register,
@@ -22,10 +27,29 @@ export const SignUpForm: FC = () => {
     handleSubmit,
   } = useForm<IFormSignUpInput>();
 
-  function handleChange(data: IFormSignUpInput) {
-    if (inputData === data.password) {
-      registratiomNewUser(data.username, data.email, data.password);
-		navigate("/sign-in");
+  async function handleChange(data: IFormSignUpInput) {
+    try {
+      if (inputData === data.password) {
+        const res = await registratiomNewUser(
+          data.username,
+          data.email,
+          data.password
+        );
+        if (res.ok) {
+          navigate("/sign-in");
+          setErr("");
+        } else {
+          const { errors } = await res.json();
+          setErr({
+            email: JSON.stringify(errors.email),
+            username: JSON.stringify(errors.username),
+          });
+        }
+      } else {
+        setErr("Passwords do not match");
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -155,6 +179,24 @@ export const SignUpForm: FC = () => {
               I agree to the processing of my personal information
             </label>
           </div>
+
+          {typeof err === "string" ? (
+            <div className={styles.error}>{err}</div>
+          ) : null}
+
+          {typeof err === "object" ? (
+            <div className={styles.error}>
+              {err.email !== undefined &&
+              JSON.parse(err.email) ? (
+                <p>{`email ${JSON.parse(err.email)}`}</p>
+              ) : null}
+              {err.username !== undefined &&
+              JSON.parse(err.username) ? (
+                <p>{`username ${JSON.parse(err.username)}`}</p>
+              ) : null}
+            </div>
+          ) : null}
+
           <button className={styles.btn} type="submit">
             Create
           </button>

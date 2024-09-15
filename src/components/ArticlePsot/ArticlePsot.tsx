@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { editingArticle } from "../../redux/slices/articlesSlice";
 import { monthOfYear } from "../../assets";
+import { TTime } from "../../types";
 
 interface ArticlePsotsProps {
   article: AticleType;
@@ -28,12 +29,11 @@ export const ArticlePsot: FC<ArticlePsotsProps> = ({
   const slug: string = articleSlug?.slug ? articleSlug.slug : "";
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [time, setTime] = useState<any>({
+  const [time, setTime] = useState<TTime>({
     dayOfMonth : null,
     monthDate : null,
     year : null,
-    month : null,
+    month : '',
   })
   
   useEffect(() => {
@@ -41,7 +41,7 @@ export const ArticlePsot: FC<ArticlePsotsProps> = ({
     const dayOfMonth = str.getDate();
     const monthDate = str.getMonth() + 1;
     const year = str.getFullYear();
-    let month;
+    let month = '';
     for (let i = 0; i < monthOfYear.length; i++) {
       if (i === monthDate) {
         month = monthOfYear[i - 1];

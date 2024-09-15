@@ -8,11 +8,7 @@ interface PaginationPageProps {
   arrayPagination: IArrayPagination[];
 }
 
-export const PaginationPage: FC<PaginationPageProps> = ({
-  page,
-  setPage,
-  arrayPagination,
-}) => {
+export const PaginationPage: FC<PaginationPageProps> = ({ page, setPage, arrayPagination }) => {
   function handleClick(i: number) {
     setPage(i - 1);
   }
@@ -21,7 +17,7 @@ export const PaginationPage: FC<PaginationPageProps> = ({
     <div
       onClick={() => handleClick(page)}
       className={
-        arrayPagination[page].active
+        arrayPagination[page - 1].active
           ? `${styles.page} ${styles.active}`
           : styles.page
       }

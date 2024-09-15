@@ -30,7 +30,7 @@ function App() {
   const dispatch = useDispatch();
 
   const auth = UseAuth();
-
+  
   useEffect(() => {
     getPost(page)
       .then((data) => {
@@ -47,6 +47,8 @@ function App() {
       .then(() => {})
       .catch(() => navigate("/sign-in"));
   }, [navigate]);
+
+  
 
   return (
     <>

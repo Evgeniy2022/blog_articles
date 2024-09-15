@@ -15,12 +15,13 @@ const storageItem = localStorage.getItem("fovoriteSlugs")
 
 export const Articles: FC<ArticlesProps> = ({
   articles,
-  page,
+  page, // текущая страница
   setPage,
-  pagesAll,
+  pagesAll, // количество articles
 }) => {
   const [saveSlugs, setSaveSlugs] = useState(storageItem);
-
+  
+  
   return (
     <>
       {articles.map((article, index) => {

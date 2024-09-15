@@ -23,11 +23,7 @@ export function loginUser(email: string, password: string) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-  });
+  })
 }
 
 export function registratiomNewUser(
@@ -41,7 +37,7 @@ export function registratiomNewUser(
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => res.json());
+  })
 }
 
 export function getUser(token: string) {

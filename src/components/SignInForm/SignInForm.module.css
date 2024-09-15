@@ -83,3 +83,8 @@
 .signup {
   color: rgba(24, 144, 255, 1);
 }
+.error{
+	color: rgba(245, 34, 45, 1);
+	font-size: 14px;
+	transform: translateY(-17px);
+}

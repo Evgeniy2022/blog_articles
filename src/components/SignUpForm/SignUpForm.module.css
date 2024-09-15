@@ -46,19 +46,19 @@
   border-radius: 4px;
 }
 
-.message{
-	position: absolute;
-	top: 0;
-	left: 0;
-	font-size: 12px;
+.message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 12px;
 }
 .emailInput,
 .passInput,
 .usernameInput {
   margin-bottom: 12px;
 }
-label{
-	font-size: 14px;
+label {
+  font-size: 14px;
 }
 
 ::placeholder {
@@ -73,17 +73,16 @@ label{
   align-items: flex-start;
   margin-bottom: 21px;
 }
-.inputChcekbox{
-	transform: translateY(3px);
-	width: 16px;
-	height: 16px;
-	border: 1px solid rgba(24, 144, 255, 1);
-
+.inputChcekbox {
+  transform: translateY(3px);
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(24, 144, 255, 1);
 }
-.labelChcekbox{
-	margin: 0 0 0 8px;
-	font-size: 14px;
-	line-height: 1.57;
+.labelChcekbox {
+  margin: 0 0 0 8px;
+  font-size: 14px;
+  line-height: 1.57;
 }
 
 .btn {
@@ -107,4 +106,9 @@ label{
 
 .signin {
   color: rgba(24, 144, 255, 1);
+}
+.error {
+  color: rgba(245, 34, 45, 1);
+  font-size: 14px;
+  transform: translateY(-17px);
 }

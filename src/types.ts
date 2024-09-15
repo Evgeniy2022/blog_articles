@@ -23,4 +23,10 @@ export interface IArrayPagination {
   active: boolean;
 }
 
+export type TTime = {
+  dayOfMonth : number | null,
+  monthDate : number | null,
+  year : number | null,
+  month : string,
+}
 

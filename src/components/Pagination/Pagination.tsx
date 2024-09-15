@@ -9,26 +9,20 @@ interface PaginationProps {
   pagesAll: number;
 }
 
-export const Pagination: FC<PaginationProps> = ({
-  page,
-  setPage,
-  pagesAll,
-}) => {
-  const [pages, setPages] = useState(0);
-  const [arrayPagination, setArrayPagination] = useState<IArrayPagination[]>(
-    []
-  );
-
+export const Pagination: FC<PaginationProps> = ({ page, setPage, pagesAll }) => {
+  const [pages, setPages] = useState(0); // количество страниц
+  const [arrayPagination, setArrayPagination] = useState<IArrayPagination[]>([]);
+  
   useEffect(() => {
-    setPages(Math.floor(pagesAll / 20));
+    setPages(Math.ceil(pagesAll / 20));
   }, [pagesAll]);
 
   useEffect(() => {
     if (pages !== null) {
         setArrayPagination(
           Array.from({ length: pages }, (_, i) => ({
-            page: 1 + i,
-            active: i === 1,
+            page: i + 1,
+            active: i === 0,
           }))
         );
     }
@@ -36,12 +30,12 @@ export const Pagination: FC<PaginationProps> = ({
 
   useEffect(() => {
     setArrayPagination(arrayPagination.map((item, index) => {
-      return ({ ...item, active: index === page + 1, })
+      return ({ ...item, active: index === page , })
     }))
   }, [page])
 
   const arrPag =  page > 2 ? arrayPagination.slice(page -2 , page + 3) : arrayPagination.slice(0, 5)
-
+  
   return (
     <div className={styles.container}>
       <button

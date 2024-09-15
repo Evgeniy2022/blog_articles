@@ -12,10 +12,13 @@ import RedLike from "../../../public/redLike.svg";
 import { createPortal } from "react-dom";
 import Modal from "../Modal/Modal";
 import { monthOfYear } from "../../assets";
+import { TTime } from "../../types";
 
 interface ArticleWithoutAuthProps {
   slug: IArticle;
 }
+
+
 
 export const ArticleWithoutAuth: FC<ArticleWithoutAuthProps> = ({ slug }) => {
   const user = useSelector((state: RootState) => state.userSlice.user);
@@ -26,12 +29,11 @@ export const ArticleWithoutAuth: FC<ArticleWithoutAuthProps> = ({ slug }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [time, setTime] = useState<any>({
+  const [time, setTime] = useState<TTime>({
     dayOfMonth : null,
     monthDate : null,
     year : null,
-    month : null,
+    month : '',
   })
   
   useEffect(() => {
@@ -45,7 +47,7 @@ export const ArticleWithoutAuth: FC<ArticleWithoutAuthProps> = ({ slug }) => {
     const dayOfMonth = str.getDate();
     const monthDate = str.getMonth() + 1;
     const year = str.getFullYear();
-    let month;
+    let month = '';
     for (let i = 0; i < monthOfYear.length; i++) {
       if (i === monthDate) {
         month = monthOfYear[i - 1];
